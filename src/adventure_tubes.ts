@@ -1,6 +1,17 @@
 import { CombatStrategy, Engine, Task } from "grimoire-kolmafia";
 import { abort, cliExecute, myHp, myMaxhp, useSkill, visitUrl, xpath } from "kolmafia";
-import { $effect, $familiar, $item, $location, $skill, Clan, Counter, have, Macro } from "libram";
+import {
+  $effect,
+  $familiar,
+  $item,
+  $location,
+  $skill,
+  Clan,
+  Counter,
+  get,
+  have,
+  Macro,
+} from "libram";
 
 const CLANS = [
   "Collaborative Dungeon Central",
@@ -11,6 +22,14 @@ const CLANS = [
 class TubeEngine extends Engine<never, Task> {}
 
 const TASKS: Task[] = [
+  {
+    name: "Beaten Up",
+    completed: () => !have($effect`Beaten Up`),
+    do: () => {
+      if (!get("lastCombatWon")) abort();
+      useSkill($skill`Tongue of the Walrus`);
+    },
+  },
   {
     name: "Wipe Slime",
     completed: () => !have($effect`Coated in Slime`),
