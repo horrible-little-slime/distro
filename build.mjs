@@ -8,7 +8,7 @@ const args = process.argv.slice(2);
 const watch = args.some((a) => a === "--watch" || a === "-w");
 
 build({
-  entryPoints: { "distro": "src/main.ts" },
+  entryPoints: { distro: "src/main.ts", tubeChatbot: "src/adventure_tube.ts" },
   bundle: true,
   minifySyntax: true,
   platform: "node",
