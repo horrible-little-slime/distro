@@ -1,5 +1,17 @@
 import { CombatStrategy, Engine, Task } from "grimoire-kolmafia";
-import { abort, cliExecute, myHp, myMaxhp, useSkill, visitUrl, xpath } from "kolmafia";
+import {
+  abort,
+  cliExecute,
+  closetAmount,
+  displayAmount,
+  itemAmount,
+  myHp,
+  myId,
+  myMaxhp,
+  myName,
+  useSkill,
+  visitUrl,
+} from "kolmafia";
 import {
   $effect,
   $familiar,
@@ -11,12 +23,19 @@ import {
   get,
   have,
   Macro,
+  set,
 } from "libram";
 
 const CLANS = [
   "Collaborative Dungeon Central",
   "Collaborative Dungeon Running 1",
   "Collaborative Dungeon Running 2",
+];
+
+const TUBE_MESSAGES = [
+  `${myName()} (#${myId()}) defeated a Slime Tube monster`,
+  `${myName()} (#${myId()}) was defeated by a Slime Tube monster`,
+  `${myName()} (#${myId()}) squeezed a Slime gall bladder`,
 ];
 
 class TubeEngine extends Engine<never, Task> {}
@@ -62,11 +81,10 @@ const TASKS: Task[] = [
   },
   {
     name: "Tubeventure",
-    completed: () =>
-      xpath(
-        visitUrl("clan_raidlogs.php"),
-        "/html/body/center/table/tbody/tr[2]/td/center/table/tbody/tr/td/div[3]/center/p/table/tbody/tr/td/blockquote"
-      ).some((line) => /phreddrickkv2/i.test(line)),
+    completed: (): boolean => {
+      const pageText = visitUrl("clan_raidlogs.php");
+      return TUBE_MESSAGES.some((message) => pageText.includes(message));
+    },
     do: $location`The Slime Tube`,
     outfit: () => ({
       modifier: ["-ML"],
@@ -97,6 +115,16 @@ const TASKS: Task[] = [
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function main(_sender: string, message: string, _channel: string): void {
+  if (
+    itemAmount($item`squirming Slime larva`) +
+      displayAmount($item`squirming Slime larva`) +
+      closetAmount($item`squirming Slime larva`) +
+      3 >=
+    690
+  ) {
+    set("chatbotScript", "");
+    return;
+  }
   if (message.includes("New message received from AltEnd")) {
     for (const clan of CLANS) {
       Clan.join(clan);
