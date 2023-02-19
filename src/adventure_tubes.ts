@@ -5,6 +5,7 @@ import {
   closetAmount,
   displayAmount,
   itemAmount,
+  myAdventures,
   myHp,
   myId,
   myMaxhp,
@@ -120,7 +121,8 @@ export function main(_sender: string, message: string, _channel: string): void {
       displayAmount($item`squirming Slime larva`) +
       closetAmount($item`squirming Slime larva`) +
       3 >=
-    690
+      690 ||
+    myAdventures() <= 0
   ) {
     set("chatbotScript", "");
     return;
