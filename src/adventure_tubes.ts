@@ -127,7 +127,8 @@ export function main(_sender: string, message: string, _channel: string): void {
       sum(
         $items`slime-soaked sweat gland, slime-soaked hypophysis, slime-soaked brain`,
         totalAmount
-      ) ||
+      ) +
+      CLANS.length ||
     myAdventures() <= 0
   ) {
     set("chatbotScript", "");
