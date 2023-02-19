@@ -33,7 +33,7 @@ const TASKS: Task[] = [
   {
     name: "Wipe Slime",
     completed: () => !have($effect`Coated in Slime`),
-    ready: () => !have($effect`Coated in Slime`, 6),
+    ready: () => !have($effect`Coated in Slime`, 10),
     do: (): void => {
       visitUrl("clan_slimetube.php?action=chamois");
       if (have($effect`Coated in Slime`)) cliExecute("hottub");
@@ -63,7 +63,7 @@ const TASKS: Task[] = [
   {
     name: "Tubeventure",
     completed: () =>
-      !xpath(
+      xpath(
         visitUrl("clan_raidlogs.php"),
         "/html/body/center/table/tbody/tr[2]/td/center/table/tbody/tr/td/div[3]/center/p/table/tbody/tr/td/blockquote"
       ).some((line) => /phreddrickkv2/i.test(line)),
@@ -90,6 +90,7 @@ const TASKS: Task[] = [
       1467: 3,
       1472: 2,
       1470: 2,
+      337: 2,
     },
   },
 ];
