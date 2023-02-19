@@ -53,6 +53,7 @@ const TASKS: Task[] = [
       modifier: ["-ML"],
       familiar: $familiar`Left-Hand Man`,
       shirt: $item`Jurassic Parka`,
+      weapon: $item`June cleaver`,
       modes: { parka: "dilophosaur" },
     }),
     combat: new CombatStrategy().autoattack(
@@ -60,6 +61,17 @@ const TASKS: Task[] = [
         .attack()
         .repeat()
     ),
+    choices: {
+      1468: 2,
+      1473: 1,
+      1469: 3,
+      1474: 2,
+      1475: 1,
+      1471: 1,
+      1467: 3,
+      1472: 2,
+      1470: 2,
+    },
   },
 ];
 
