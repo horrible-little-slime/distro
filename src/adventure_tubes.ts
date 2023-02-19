@@ -4,6 +4,7 @@ import {
   cliExecute,
   closetAmount,
   displayAmount,
+  Item,
   itemAmount,
   myAdventures,
   myHp,
@@ -17,6 +18,7 @@ import {
   $effect,
   $familiar,
   $item,
+  $items,
   $location,
   $skill,
   Clan,
@@ -25,7 +27,9 @@ import {
   have,
   Macro,
   set,
+  sum,
 } from "libram";
+import { NumericProperty } from "libram/dist/propertyTypes";
 
 const CLANS = [
   "Collaborative Dungeon Central",
@@ -114,14 +118,16 @@ const TASKS: Task[] = [
   },
 ];
 
+const totalAmount = (i: Item) => sum([displayAmount, itemAmount, closetAmount], (f) => f(i));
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function main(_sender: string, message: string, _channel: string): void {
   if (
-    itemAmount($item`squirming Slime larva`) +
-      displayAmount($item`squirming Slime larva`) +
-      closetAmount($item`squirming Slime larva`) +
-      3 >=
-      690 ||
+    sum(["skillLevel46", "skillLevel47", "skillLevel48"], (x: NumericProperty) => get(x)) +
+      sum(
+        $items`slime-soaked sweat gland, slime-soaked hypophysis, slime-soaked brain`,
+        totalAmount
+      ) ||
     myAdventures() <= 0
   ) {
     set("chatbotScript", "");
