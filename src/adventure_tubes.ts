@@ -122,6 +122,17 @@ const totalAmount = (i: Item) => sum([displayAmount, itemAmount, closetAmount], 
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function main(_sender: string, message: string, _channel: string): void {
+  if (message.includes("New message received from AltEnd")) {
+    for (const clan of CLANS) {
+      Clan.join(clan);
+      const engine = new TubeEngine(TASKS);
+      try {
+        engine.run();
+      } finally {
+        engine.destruct();
+      }
+    }
+  }
   if (
     sum(["skillLevel46", "skillLevel47", "skillLevel48"], (x: NumericProperty) => get(x)) +
       sum(
@@ -133,16 +144,5 @@ export function main(_sender: string, message: string, _channel: string): void {
   ) {
     set("chatbotScript", "");
     return;
-  }
-  if (message.includes("New message received from AltEnd")) {
-    for (const clan of CLANS) {
-      Clan.join(clan);
-      const engine = new TubeEngine(TASKS);
-      try {
-        engine.run();
-      } finally {
-        engine.destruct();
-      }
-    }
   }
 }
