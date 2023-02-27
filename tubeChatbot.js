@@ -5233,7 +5233,7 @@ var CLANS = ["Collaborative Dungeon Central", "Collaborative Dungeon Running 1",
   completed: function() {
     var pageText = (0, import_kolmafia13.visitUrl)("clan_raidlogs.php");
     return TUBE_MESSAGES.some(function(message) {
-      return pageText.includes(message);
+      return RegExp(message, "i").test(pageText);
     });
   },
   do: $location(_templateObject114 || (_templateObject114 = _taggedTemplateLiteral6(["The Slime Tube"]))),
