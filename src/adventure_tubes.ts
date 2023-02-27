@@ -88,7 +88,7 @@ const TASKS: Task[] = [
     name: "Tubeventure",
     completed: (): boolean => {
       const pageText = visitUrl("clan_raidlogs.php");
-      return TUBE_MESSAGES.some((message) => pageText.includes(message));
+      return TUBE_MESSAGES.some((message) => RegExp(message, "i").test(pageText));
     },
     do: $location`The Slime Tube`,
     outfit: () => ({
